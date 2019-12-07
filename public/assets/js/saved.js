@@ -101,3 +101,24 @@ $(document).ready(function() {
         // Now append the notesToRender to the note-container inside the note modal
         $(".note-container").append(notesToRender);
       }
+      
+      // This function handles deleting articles/headlines
+      function handleArticleDelete() {
+        var articleToDelete = $(this)
+          .parents(".card")
+          .data();
+        // Remove card from page
+        $(this)
+          .parents(".card")
+          .remove();
+        // Using a delete method here just to be semantic since we are deleting an article/headline
+        $.ajax({
+          method: "DELETE",
+          url: "/api/headlines/" + articleToDelete._id
+        }).then(function(data) {
+          // If this works out, run initPage again which will re-render our list of saved articles
+          if (data.ok) {
+            initPage();
+          }
+        });
+      }
