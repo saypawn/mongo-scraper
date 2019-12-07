@@ -27,6 +27,7 @@ $(document).ready(function() {
         articleContainer.append(articleCards);
       }
     
+      // This function takes in a single JSON object for an article/headline
       function createCard(article) {
         var card = $("<div class='card'>");
         var cardHeader = $("<div class='card-header'>").append(
@@ -37,3 +38,37 @@ $(document).ready(function() {
             $("<a class='btn btn-success save'>Save Article</a>")
           )
         );
+
+        var cardBody = $("<div class='card-body'>").text(article.summary);
+
+    card.append(cardHeader, cardBody);
+    // We attach the article's id to the jQuery element
+    // We will use this when trying to figure out which article the user wants to save
+    card.data("_id", article._id);
+    // We return the constructed card jQuery element
+    return card;
+
+    function renderEmpty() {
+        // This function renders some HTML to the page explaining we don't have any articles to view
+        // Using a joined array of HTML string data because it's easier to read/change than a concatenated string
+        var emptyAlert = $(
+          [
+            "<div class='alert alert-warning text-center'>",
+            "<h4>Sorry we don't have any new articles.</h4>",
+            "</div>",
+            "<div class='card'>",
+            "<div class='card-header text-center'>",
+            "<h3>What Would You Like To Do?</h3>",
+            "</div>",
+            "<div class='card-body text-center'>",
+            "<h4><a class='scrape-new'>Try Scraping New Articles</a></h4>",
+            "<h4><a href='/saved'>Go to Saved Articles</a></h4>",
+            "</div>",
+            "</div>"
+          ].join("")
+        );
+        // Appending this data to the page
+        articleContainer.append(emptyAlert);
+      }
+
+
