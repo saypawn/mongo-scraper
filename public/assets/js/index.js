@@ -101,6 +101,7 @@ $(document).ready(function () {
         function handleArticleScrape() {
             // This function handles the user clicking any "scrape new article" buttons
             $.get("/api/fetch").then(function (data) {
+
                 initPage();
                 bootbox.alert($("<h3 class='text-center m-top-80'>").text(data.message));
             });
